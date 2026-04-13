@@ -7,3 +7,7 @@
 - item cards you can mark as resolved
 - set a buy at price, if item price drops say to that margin, it will notify you
 - actually, fist add the price you saw the item at initially, as we aren't sure if you can scrape for price across different stores
+
+
+# Miro: https://miro.com/app/board/uXjVGjU99U8=/
+# Meeting: https://www.when2meet.com/?36156767-PyTqS
