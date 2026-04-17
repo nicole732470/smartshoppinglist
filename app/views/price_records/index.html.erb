@@ -1,2 +1,56 @@
-<h1>PriceRecords#index</h1>
-<p>Find me in app/views/price_records/index.html.erb</p>
+<div class="hero-section">
+  <div class="container">
+    <h1 class="display-5 fw-bold">📈 All Price Records</h1>
+    <p class="lead">Complete price history across all products and stores</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <span class="text-muted"><%= @price_records.count %> records total</span>
+    <%= link_to "← All Products", products_path, class: "btn btn-outline-secondary" %>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Store</th>
+          <th>Date</th>
+          <th>Link</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @price_records.each do |record| %>
+          <tr>
+            <td><%= record.id %></td>
+            <td><%= link_to record.product.name, record.product, class: "text-decoration-none fw-semibold" %></td>
+            <td><span class="badge bg-success fs-6">$<%= sprintf("%.2f", record.price) %></span></td>
+            <td><strong><%= record.store_name %></strong></td>
+            <td><%= record.recorded_at.strftime("%b %d, %Y") %></td>
+            <td>
+              <% if record.url.present? %>
+                <%= link_to "🛒 Buy", record.url, target: "_blank", class: "btn btn-sm btn-outline-success" %>
+              <% else %>
+                <span class="text-muted">—</span>
+              <% end %>
+            </td>
+            <td><small class="text-muted"><%= record.notes %></small></td>
+            <td>
+              <div class="btn-group btn-group-sm">
+                <%= link_to "View", price_record_path(record), class: "btn btn-outline-primary" %>
+                <%= link_to "Edit", edit_price_record_path(record), class: "btn btn-outline-secondary" %>
+                <%= link_to "Delete", record, data: { turbo_method: :delete, turbo_confirm: "Delete this record?" }, class: "btn btn-outline-danger" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

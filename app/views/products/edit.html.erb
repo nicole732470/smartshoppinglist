@@ -1,2 +1,12 @@
-<h1>Products#edit</h1>
-<p>Find me in app/views/products/edit.html.erb</p>
+<div class="container mt-4" style="max-width: 600px;">
+  <h2>✏️ Edit Product</h2>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <%= render 'form', product: @product %>
+    </div>
+  </div>
+  <div class="mt-2 d-flex gap-2">
+    <%= link_to "← Back to Product", @product, class: "btn btn-outline-secondary" %>
+    <%= link_to "All Products", products_path, class: "btn btn-outline-primary" %>
+  </div>
+</div>

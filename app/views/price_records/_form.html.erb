@@ -1,0 +1,43 @@
+<%= form_with model: [@product, price_record], local: true do |f| %>
+  <% if price_record.errors.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% price_record.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :price, "Price ($)", class: "form-label fw-semibold" %>
+    <%= f.number_field :price, step: 0.01, min: 0, class: "form-control", placeholder: "0.00" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :store_name, "Store", class: "form-label fw-semibold" %>
+    <%= f.select :store_name,
+        ["Amazon", "Walmart", "Target", "Best Buy", "Costco", "eBay", "Newegg", "B&H Photo", "Apple Store", "Other"],
+        { prompt: "Select a store" },
+        class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :url, "Purchase URL", class: "form-label fw-semibold" %>
+    <%= f.url_field :url, class: "form-control", placeholder: "https://www.amazon.com/..." %>
+    <div class="form-text">Direct link to this product on the store's website.</div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :recorded_at, "Date Recorded", class: "form-label fw-semibold" %>
+    <%= f.datetime_local_field :recorded_at, class: "form-control",
+        value: (price_record.recorded_at || Time.current).strftime("%Y-%m-%dT%H:%M") %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :notes, "Notes (optional)", class: "form-label fw-semibold" %>
+    <%= f.text_area :notes, class: "form-control", rows: 2, placeholder: "e.g. Black Friday deal, coupon applied..." %>
+  </div>
+
+  <%= f.submit price_record.new_record? ? "Add Price Record" : "Save Changes", class: "btn btn-success w-100" %>
+<% end %>

@@ -1,2 +1,12 @@
-<h1>PriceRecords#edit</h1>
-<p>Find me in app/views/price_records/edit.html.erb</p>
+<div class="container mt-4" style="max-width: 600px;">
+  <h2>✏️ Edit Price Record</h2>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <%= render 'form', price_record: @price_record, product: @price_record.product %>
+    </div>
+  </div>
+  <div class="mt-2 d-flex gap-2">
+    <%= link_to "← Back to Record", @price_record, class: "btn btn-outline-secondary" %>
+    <%= link_to "View Product", @price_record.product, class: "btn btn-outline-primary" %>
+  </div>
+</div>

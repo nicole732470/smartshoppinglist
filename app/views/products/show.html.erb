@@ -1,2 +1,103 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/show.html.erb</p>
+<div class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item"><%= link_to "Products", products_path %></li>
+      <li class="breadcrumb-item active"><%= @product.name %></li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow-sm mb-4">
+        <% if @product.image_url.present? %>
+          <%= image_tag @product.image_url, class: "card-img-top", style: "max-height:280px; object-fit:cover;" %>
+        <% else %>
+          <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+            <span class="fs-1">📦</span>
+          </div>
+        <% end %>
+        <div class="card-body">
+          <span class="badge bg-primary mb-2"><%= @product.category %></span>
+          <h2 class="card-title fs-4"><%= @product.name %></h2>
+          <p class="card-text text-muted"><%= @product.description %></p>
+          <hr>
+          <div class="d-flex justify-content-between">
+            <div class="text-center">
+              <div class="fs-5 fw-bold text-success">
+                <% if @product.latest_price %>$<%= sprintf("%.2f", @product.latest_price) %><% else %>—<% end %>
+              </div>
+              <small class="text-muted">Latest Price</small>
+            </div>
+            <div class="text-center">
+              <div class="fs-5 fw-bold text-danger">
+                <% if @product.lowest_price %>$<%= sprintf("%.2f", @product.lowest_price) %><% else %>—<% end %>
+              </div>
+              <small class="text-muted">Lowest Ever</small>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer d-flex flex-column gap-2">
+          <%= link_to "✏️ Edit Product", edit_product_path(@product), class: "btn btn-outline-secondary btn-sm" %>
+          <%= link_to "🗑️ Delete Product", @product, data: { turbo_method: :delete, turbo_confirm: "Delete this product and all its price records?" }, class: "btn btn-outline-danger btn-sm" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">📊 Price History</h5>
+          <%= link_to "+ Add Price", new_product_price_record_path(@product), class: "btn btn-sm btn-warning" %>
+        </div>
+        <div class="card-body p-0">
+          <% if @price_records.any? %>
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Price</th>
+                    <th>Store</th>
+                    <th>Date</th>
+                    <th>Notes</th>
+                    <th>Link</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @price_records.each do |record| %>
+                    <tr>
+                      <td><span class="badge bg-success fs-6">$<%= sprintf("%.2f", record.price) %></span></td>
+                      <td><strong><%= record.store_name %></strong></td>
+                      <td><small><%= record.recorded_at.strftime("%b %d, %Y") %></small></td>
+                      <td><small class="text-muted"><%= record.notes %></small></td>
+                      <td>
+                        <% if record.url.present? %>
+                          <%= link_to "🛒 Buy", record.url, target: "_blank", class: "btn btn-sm btn-outline-success" %>
+                        <% else %>
+                          <span class="text-muted">—</span>
+                        <% end %>
+                      </td>
+                      <td>
+                        <div class="btn-group btn-group-sm">
+                          <%= link_to "View", price_record_path(record), class: "btn btn-outline-primary" %>
+                          <%= link_to "Edit", edit_price_record_path(record), class: "btn btn-outline-secondary" %>
+                          <%= link_to "Del", record, data: { turbo_method: :delete, turbo_confirm: "Delete this price record?" }, class: "btn btn-outline-danger" %>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <div class="text-center py-5 text-muted">
+              <p>No price records yet.</p>
+              <%= link_to "+ Add First Price", new_product_price_record_path(@product), class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
