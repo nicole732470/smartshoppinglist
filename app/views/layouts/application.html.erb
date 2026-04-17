@@ -12,35 +12,25 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
         <%= link_to "💰 PriceTracker", root_path, class: "navbar-brand" %>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <%= link_to "Products", products_path, class: "nav-link #{controller_name == 'products' ? 'active' : ''}" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Price Records", price_records_path, class: "nav-link #{controller_name == 'price_records' ? 'active' : ''}" %>
-            </li>
-          </ul>
-          <div class="d-flex gap-2">
-            <%= link_to "+ Add Product", new_product_path, class: "btn btn-outline-light btn-sm" %>
-          </div>
+        <div class="navbar-nav me-auto">
+          <%= link_to "Products", products_path, class: "nav-link #{controller_name == 'products' ? 'active' : ''}" %>
+          <%= link_to "Price Records", price_records_path, class: "nav-link #{controller_name == 'price_records' ? 'active' : ''}" %>
+        </div>
+        <div class="d-flex gap-2">
+          <%= link_to "+ Add Product", new_product_path, class: "btn btn-outline-light btn-sm" %>
         </div>
       </div>
     </nav>
 
     <% if notice %>
-      <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+      <div class="alert alert-success m-3" role="alert">
         <%= notice %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
     <% end %>
+
     <% if alert %>
-      <div class="alert alert-danger alert-dismissible fade show m-3" role="alert">
+      <div class="alert alert-danger m-3" role="alert">
         <%= alert %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
       </div>
     <% end %>
 
